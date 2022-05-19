@@ -21,6 +21,7 @@
 # pylint: disable=C0305  # Trailing newlines editor should fix automatically, pointless warning
 
 
+from math import inf
 # import os
 # import sys
 from signal import SIG_DFL
@@ -34,6 +35,15 @@ from clicktool import click_add_options
 from clicktool import click_global_options
 
 signal(SIGPIPE, SIG_DFL)
+
+
+def yn_question(prompt: str, verbose: Union[bool, int, float]):
+    result = input(f"{prompt} [y/n]:")
+    if verbose == inf:
+        ic(result)
+    if result.lower() == "y":
+        return True
+    return False
 
 
 def passphrase_prompt(
