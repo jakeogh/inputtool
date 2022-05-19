@@ -21,11 +21,12 @@
 # pylint: disable=C0305  # Trailing newlines editor should fix automatically, pointless warning
 
 
-#import os
-#import sys
+# import os
+# import sys
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
+from typing import Union
 
 import click
 from asserttool import ic
@@ -35,17 +36,18 @@ from clicktool import click_global_options
 signal(SIGPIPE, SIG_DFL)
 
 
-def passphrase_prompt(note: str,
-                      *,
-                      verbose: int,
-                      ):
+def passphrase_prompt(
+    note: str,
+    *,
+    verbose: Union[bool, int, float],
+):
     note = note.strip()
     assert len(note) > 0
-    prompt = "Enter {} passphrase: ".format(note)
+    prompt = f"Enter {note} passphrase: "
     passphrase = input(prompt)
-    passphrase = passphrase.encode('ascii')
+    passphrase = passphrase.encode("ascii")
     passphrase_v = input(prompt)
-    passphrase_v = passphrase_v.encode('ascii')
+    passphrase_v = passphrase_v.encode("ascii")
     assert passphrase == passphrase_v
     assert len(passphrase) > 12
     if verbose:
@@ -53,12 +55,13 @@ def passphrase_prompt(note: str,
     return passphrase
 
 
-@click.group()
+@click.group(no_args_is_help=True)
 @click_add_options(click_global_options)
 @click.pass_context
-def cli(ctx,
-        verbose: int,
-        verbose_inf: bool,
-        ):
+def cli(
+    ctx,
+    verbose: Union[bool, int, float],
+    verbose_inf: bool,
+):
 
     pass
