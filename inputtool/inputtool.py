@@ -73,5 +73,4 @@ def cli(
     verbose_inf: bool,
     verbose: bool | int | float = False,
 ):
-
     pass
